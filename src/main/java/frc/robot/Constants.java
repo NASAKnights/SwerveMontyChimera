@@ -13,7 +13,12 @@ import com.ctre.phoenix.sensors.SensorVelocityMeasPeriod;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import frc.lib.sds.SDSModuleType;
 
 public class Constants {
@@ -184,5 +189,97 @@ public class Constants {
         public static final Rotation2d kAllowableAngleTolerance = Rotation2d.fromDegrees(5.0);
     }
 
+    // Rapid React constants ---------------------------------------------------
+
+    public static final int kPDH = 40;
+    public static final ModuleType kPDHType = ModuleType.kRev;
+    public static final int kPH = 41;
+    public static final PneumaticsModuleType kPHType = PneumaticsModuleType.REVPH;
+
+    public static final class OIConstants {
+        // controller ID constants
+        public static final int kDriverID = 0;
+        public static final int kOperatorID = 1;
+
+        // joystick button numbers
+        public static final int kSquare = 1;
+        public static final int kX = 2;
+        public static final int kCircle = 3;
+        public static final int kTriangle = 4;
+        public static final int kLeftBumper = 5;
+        public static final int kRightBumper = 6;
+        public static final int kLeftTriggerButton = 7;
+        public static final int kRightTriggerButton = 8;
+        public static final int kShare = 9;
+        public static final int kOptions = 10;
+
+        // joystick axis numbers
+        public static final int kLeftXJoystick = 0;
+        public static final int kLeftYJoystick = 1;
+        public static final int kRightXJoystick = 2;
+        public static final int kRightYJoystick = 5;
+        public static final int kLeftTrigger = 3;
+        public static final int kRightTrigger = 4;
+    }
+
+
+    public static class IntakeConstants {
+        // Motor CAN IDs
+        public static final byte kIntakeMotorID = 9;
+
+        // Solenoid Pneumatic Hub Channels
+        public static final byte kIntakeDeployerForwardChannel = 2;
+        public static final byte kIntakeDeployerReverseChannel = 3;
+
+        // Acceptable speeds for intake
+        public static final double kMinIntakeSpeed = 0.25;
+        public static final double kMaxIntakeSpeed = 0.60;
+        public static final double kDefaultIntakeSpeed = 0.50;
+
+        // Values for intake positions
+        public static final DoubleSolenoid.Value kRetracted = Value.kReverse;
+        public static final DoubleSolenoid.Value kDeployed = Value.kForward;
+    }
+
+    public static class ShooterConstants {
+        // Motor CAN ID
+        public static final byte kFlywheelMotorID = 7;
+
+        // Solenoid Pneumatic Hub Channels
+        public static final byte kHoodForwardChannelID = 0;
+        public static final byte kHoodReverseChannelID = 1;
+
+
+        // RoboRio Sensor Ports
+        public static final byte kShooterSwitchID = 0;
+        public static final I2C.Port kColorSensorPort = I2C.Port.kOnboard;
+
+
+        // Solenoid Values
+        public static final DoubleSolenoid.Value kHoodRetracted = Value.kReverse;
+        public static final DoubleSolenoid.Value kHoodExtended = Value.kForward;
+
+        // Opposite Alliance Cargo Shots
+        public static final boolean kOppositeColorHoodExtended = false; // TODO Find this
+        public static final double kOppositeColorRPM = 800; // TODO Find this
+
+        // Autonomous Cargo Shots
+        public static final boolean kTARMACEdgeHoodExtended = false;
+        public static final double kTARMACEdgeShotRPM = 3800;
+
+
+        // Tranfer wheel speeds
+        public static final double kDefaultTransferSpeed = 0.40; // TODO Find this
+
+        // Tolerances on the flywheel
+        public static final double kVelocityToleranceRPM = 40;
+        public static final int kMinCount = 4;
+
+        public static final boolean kAutoShotHoodExtended = true;
+		public static final double kAutoShotRPM = 3650;
+
+        public static final boolean kSafeZoneHoodExtended = true;
+		public static final double kSafeZoneRPM = 4300;
+    }
 
 }
