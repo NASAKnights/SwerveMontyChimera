@@ -6,7 +6,7 @@ import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.util.control.NKVictorSPX;
+import frc.lib.control.motors.NKVictorSPX;
 
 public class Indexer extends SubsystemBase {
     private NKVictorSPX transfer;
