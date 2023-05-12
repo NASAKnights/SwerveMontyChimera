@@ -9,14 +9,15 @@ public class IntakeIndexCommand extends CommandBase {
     Indexer indexer;
 
     public IntakeIndexCommand(Intake intake, Indexer indexer) {
-        addRequirements(indexer);
         this.intake = intake;
         this.indexer = indexer;
+        addRequirements(indexer);
     }
 
     @Override
     public void execute() {
-        if (intake.isDeployed() && !indexer.hasCargo()) {
+        // if (intake.isDeployed() && !indexer.hasCargo()) {
+        if (!indexer.hasCargo()) {
             indexer.intakeIndex();
         } else {
             indexer.stopIndex();

@@ -27,10 +27,10 @@ public class IntakeCommand extends CommandBase {
     @Override
     public void execute() {
         intakeAxis = -operator.getRawAxis(OIConstants.kRightYJoystick);
-        if (Math.abs(intakeAxis) > 0.30 && !intake.isDeployed())
-            intake.deploy();
-        else if (Math.abs(intakeAxis) < 0.30 && intake.isDeployed())
-            intake.retract();
+        // if (Math.abs(intakeAxis) > 0.30 && !intake.isDeployed())
+        //     intake.deploy();
+        // else if (Math.abs(intakeAxis) < 0.30 && intake.isDeployed())
+        //     intake.retract();
 
         intakeSpeed = SmartDashboard.getNumber("Intake Speed", intakeSpeed);
 

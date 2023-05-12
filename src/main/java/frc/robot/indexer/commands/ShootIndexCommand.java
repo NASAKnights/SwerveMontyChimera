@@ -9,9 +9,9 @@ public class ShootIndexCommand extends CommandBase {
     Indexer indexer;
 
     public ShootIndexCommand(Indexer indexer, Shooter shooter) {
-        addRequirements(indexer);
         this.shooter = shooter;
         this.indexer = indexer;
+        addRequirements(indexer);
     }
 
     @Override

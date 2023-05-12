@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.kauailabs.navx.frc.AHRS;
 
 import static frc.robot.Constants.kNavXPort;
@@ -15,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.lib.control.motors.NKTalonFX;
 import frc.robot.Constants.OIConstants;
 import frc.robot.drive.SwerveDrive;
 import frc.robot.drive.commands.Drive;
@@ -52,9 +54,6 @@ public class RobotContainer {
 
     navx = new AHRS(kNavXPort);
 
-
-    CameraServer.startAutomaticCapture();
-
     swerve = new SwerveDrive(navx);
     
     swerve.readoffsets();
@@ -91,27 +90,37 @@ public class RobotContainer {
     new JoystickButton(driver, 1).onTrue(new InstantCommand(swerve::resetHeading));
 
     new JoystickButton(operator, OIConstants.kSquare)
-            .onTrue(new SpinUpShooter(shooter, 3650, true))
-            .whileTrue(new ShootIndexCommand(indexer, shooter))
-            .onFalse(new StopShooter(shooter));
+        // .onTrue(new SpinUpShooter(shooter, 3650, true))
+        .whileTrue(new ShootIndexCommand(indexer, shooter))
+        .onFalse(new StopShooter(shooter));
 
-        new JoystickButton(operator, OIConstants.kCircle)
-            .onTrue(new SpinUpShooter(shooter, 4000, false)) //was 4300
-            .whileTrue(new ShootIndexCommand(indexer, shooter))
-            .onFalse(new StopShooter(shooter));
+    // new JoystickButton(operator, OIConstants.kCircle)
+    //     .onTrue(new SpinUpShooter(shooter, 4000, false)) //was 4300
+    //     .whileTrue(new ShootIndexCommand(indexer, shooter))
+    //     .onFalse(new StopShooter(shooter));
 
-        new JoystickButton(operator, OIConstants.kX)
-            .onTrue(new SpinUpShooter(shooter, 4500, false))
-            .whileTrue(new ShootIndexCommand(indexer, shooter))
-            .onFalse(new StopShooter(shooter));
+    // new JoystickButton(operator, OIConstants.kX)
+    //     .onTrue(new SpinUpShooter(shooter, 4500, false))
+    //     .whileTrue(new ShootIndexCommand(indexer, shooter))
+    //     .onFalse(new StopShooter(shooter));
+
+    new JoystickButton(operator, OIConstants.kTriangle)
+        .onTrue(new InstantCommand(() -> {shooter.flywheel.set(0.35);}));
 
   }
 
   public void periodic(){
     swerve.updateSmartDash();
+    // swerve.writeOffsets();
+    // swerve.readoffsets();
+       
+  }
+
+  public void disabledPeriodic(){
+    swerve.updateSmartDash();
     swerve.writeOffsets();
     swerve.readoffsets();
-       
+    swerve.updateOffsets();
   }
   
 

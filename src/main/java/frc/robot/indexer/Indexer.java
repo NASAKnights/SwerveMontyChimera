@@ -10,13 +10,13 @@ import frc.lib.control.motors.NKVictorSPX;
 
 public class Indexer extends SubsystemBase {
     private NKVictorSPX transfer;
-    private ColorSensorV3 sensor;
+    // private ColorSensorV3 sensor;
     private DigitalInput limit;
 
     public Indexer() {
-        transfer = new NKVictorSPX(10);
+        transfer = new NKVictorSPX(8); //TODO change number
         transfer.setNeutralMode(NeutralMode.Brake);
-        sensor = new ColorSensorV3(I2C.Port.kOnboard);
+        // sensor = new ColorSensorV3(I2C.Port.kOnboard);
         limit = new DigitalInput(0);
     }
 

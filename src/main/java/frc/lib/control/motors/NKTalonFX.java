@@ -50,6 +50,7 @@ public class NKTalonFX extends WPI_TalonFX {
 
     public void setVelocityRPM(double rpm) {
         this.setVelocity(rpmToTicksPer100Milliseconds(rpm));
+        // this.set(ControlMode.Velocity, rpmToTicksPer100Milliseconds(rpm));
     }
 
     public double getPosition() {

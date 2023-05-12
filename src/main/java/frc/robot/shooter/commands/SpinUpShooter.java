@@ -7,7 +7,7 @@ public class SpinUpShooter extends InstantCommand {
     public SpinUpShooter(Shooter shooter, double rpm, boolean hoodExtended) {
         super(() -> {
             shooter.setFlywheelRPM(rpm);
-            shooter.setHoodExtended(hoodExtended);
+            // shooter.setHoodExtended(hoodExtended);
         }, shooter);
         addRequirements(shooter);
     }

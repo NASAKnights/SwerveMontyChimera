@@ -16,7 +16,7 @@ public class Shooter extends SubsystemBase {
 
     double targetRPM, targetPercent;
 
-    private NKTalonFX flywheel;
+    public NKTalonFX flywheel;
     private NKDoubleSolenoid hood;
 
     private double kFlywheelTolerance = 40;
@@ -56,7 +56,7 @@ public class Shooter extends SubsystemBase {
     }
 
     public void setHoodExtended(boolean extended) {
-        hood.set(extended? ShooterConstants.kHoodExtended : ShooterConstants.kHoodRetracted);
+        // hood.set(extended? ShooterConstants.kHoodExtended : ShooterConstants.kHoodRetracted);
     }
 
     public boolean getHoodExtended() {
@@ -68,7 +68,8 @@ public class Shooter extends SubsystemBase {
     }
 
     public boolean isAtTarget() {
-        return (targetPercent > 0.05 || targetRPM > 100) && Math.abs(flywheel.getVelocityRPM() - targetRPM) < kFlywheelTolerance;
+        // return (targetPercent > 0.05 || targetRPM > 100) && (Math.abs(flywheel.getVelocityRPM() - targetRPM) < kFlywheelTolerance);
+        return true;
     }
 
     @Override

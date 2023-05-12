@@ -24,7 +24,7 @@ public class RunIntake extends CommandBase {
     }
     
     public static CommandBase createRunIntakeCommand(Intake intake, BooleanSupplier endCondition) {
-        return new RunIntake(intake).withInterrupt(endCondition);
+        return new RunIntake(intake).until(endCondition);
     }
     
     public static CommandBase createRunIntakeCommandWithDelay(Intake intake, double delaySeconds) {
