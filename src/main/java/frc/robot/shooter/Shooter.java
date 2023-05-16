@@ -1,5 +1,9 @@
 package frc.robot.shooter;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.VelocityMeasPeriod;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -17,25 +21,24 @@ public class Shooter extends SubsystemBase {
     double targetRPM, targetPercent;
 
     public NKTalonFX flywheel;
-    private NKDoubleSolenoid hood;
+    // private NKDoubleSolenoid hood;
 
-    private double kFlywheelTolerance = 40;
+    private double kFlywheelTolerance = 70;
 
     public Shooter() {
         flywheel = new NKTalonFX(ShooterConstants.kFlywheelMotorID);
         // flywheel.setPIDF(0, kP, kI, kD, kF);
-        flywheel.config_kP(0, kP);
-        flywheel.config_kI(0, kI);
-        flywheel.config_kD(0, kD);
-        flywheel.config_kF(0, kF);
-        flywheel.configVoltageCompSaturation(12);
+        // flywheel.config_kP(0, kP);
+        // flywheel.config_kI(0, kI);
+        // flywheel.config_kD(0, kD);
+        // flywheel.config_kF(0, kF);
+        // flywheel.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+        
+        // flywheel.configVoltageCompSaturation(12);
+        flywheel.configFactoryDefault();
+        flywheel.configAllSettings(Constants.ShooterConstants.kFlywheelMotorConfig);
         flywheel.enableVoltageCompensation(true);
-        hood = new NKDoubleSolenoid(
-            Constants.kPH,
-            Constants.kPHType,
-            ShooterConstants.kHoodForwardChannelID,
-            ShooterConstants.kHoodReverseChannelID
-        );
+        flywheel.setNeutralMode(NeutralMode.Coast);
 
         // SmartDashboard.putNumber("setFlywheelRPM", targetRPM);
         // SmartDashboard.putBoolean("setHoodExtended", getHoodExtended());
@@ -59,17 +62,17 @@ public class Shooter extends SubsystemBase {
         // hood.set(extended? ShooterConstants.kHoodExtended : ShooterConstants.kHoodRetracted);
     }
 
-    public boolean getHoodExtended() {
-        return hood.get() == ShooterConstants.kHoodExtended;
-    }
+    // public boolean getHoodExtended() {
+    //     return hood.get() == ShooterConstants.kHoodExtended;
+    // }
 
-    public void toggleHood() {
-        setHoodExtended(!getHoodExtended());
-    }
+    // public void toggleHood() {
+    //     setHoodExtended(!getHoodExtended());
+    // }
 
     public boolean isAtTarget() {
-        // return (targetPercent > 0.05 || targetRPM > 100) && (Math.abs(flywheel.getVelocityRPM() - targetRPM) < kFlywheelTolerance);
-        return true;
+        return (targetPercent > 0.05 || targetRPM > 100) && (Math.abs(flywheel.getVelocityRPM() - targetRPM) < kFlywheelTolerance);
+        // return true;
     }
 
     @Override
@@ -78,7 +81,7 @@ public class Shooter extends SubsystemBase {
     }
 
     private void log() {
-        // SmartDashboard.putNumber("Flywheel RPM", flywheel.getVelocityRPM());
+        SmartDashboard.putNumber("Flywheel RPM", flywheel.getVelocityRPM());
         // SmartDashboard.putNumber("Voltage Output", flywheel.getMotorOutputVoltage());
     }
 }

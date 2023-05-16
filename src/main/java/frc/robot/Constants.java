@@ -280,6 +280,31 @@ public class Constants {
 
         public static final boolean kSafeZoneHoodExtended = true;
 		public static final double kSafeZoneRPM = 4300;
+
+        public static final boolean kFlywheelEnableCurrentLimit = true;
+        public static final int kFlywheelContinuousCurrentLimit = 25;
+        public static final int kFlywheelPeakCurrentLimit = 30;
+        public static final double kFlywheelPeakCurrentDuration = 0.1;
+
+        // Flywheel configs
+        public static final TalonFXConfiguration kFlywheelMotorConfig = new TalonFXConfiguration() {
+            {
+                this.primaryPID.selectedFeedbackSensor = FeedbackDevice.IntegratedSensor;
+                this.primaryPID.selectedFeedbackCoefficient = 1;
+                this.slot0.kP = 0.165;
+                this.slot0.kI = 0.0;
+                this.slot0.kD = 0.0;
+                this.slot0.kF = 0.0480;
+
+                this.voltageCompSaturation = 12.0;
+                this.supplyCurrLimit = new SupplyCurrentLimitConfiguration(
+                        kFlywheelEnableCurrentLimit,
+                        kFlywheelContinuousCurrentLimit,
+                        kFlywheelPeakCurrentLimit,
+                        kFlywheelPeakCurrentDuration);
+                
+            }
+        };
     }
 
 }

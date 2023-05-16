@@ -90,22 +90,22 @@ public class RobotContainer {
     new JoystickButton(driver, 1).onTrue(new InstantCommand(swerve::resetHeading));
 
     new JoystickButton(operator, OIConstants.kSquare)
-        // .onTrue(new SpinUpShooter(shooter, 3650, true))
+        .onTrue(new SpinUpShooter(shooter, 3650, true))
         .whileTrue(new ShootIndexCommand(indexer, shooter))
         .onFalse(new StopShooter(shooter));
 
-    // new JoystickButton(operator, OIConstants.kCircle)
-    //     .onTrue(new SpinUpShooter(shooter, 4000, false)) //was 4300
-    //     .whileTrue(new ShootIndexCommand(indexer, shooter))
-    //     .onFalse(new StopShooter(shooter));
+    new JoystickButton(operator, OIConstants.kCircle)
+        .onTrue(new SpinUpShooter(shooter, 4000, false)) //was 4300
+        .whileTrue(new ShootIndexCommand(indexer, shooter))
+        .onFalse(new StopShooter(shooter));
 
-    // new JoystickButton(operator, OIConstants.kX)
-    //     .onTrue(new SpinUpShooter(shooter, 4500, false))
-    //     .whileTrue(new ShootIndexCommand(indexer, shooter))
-    //     .onFalse(new StopShooter(shooter));
+    new JoystickButton(operator, OIConstants.kX)
+        .onTrue(new SpinUpShooter(shooter, 4500, false))
+        .whileTrue(new ShootIndexCommand(indexer, shooter))
+        .onFalse(new StopShooter(shooter));
 
-    new JoystickButton(operator, OIConstants.kTriangle)
-        .onTrue(new InstantCommand(() -> {shooter.flywheel.set(0.35);}));
+    // new JoystickButton(operator, OIConstants.kTriangle)
+    //     .onTrue(new InstantCommand(() -> {shooter.flywheel.set(0.75);}));
 
   }
 
