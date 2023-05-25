@@ -22,6 +22,9 @@ import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import frc.lib.sds.SDSModuleType;
 
 public class Constants {
+
+    public static final boolean kDemoMode = true;
+
     public static final int kDriverPort = 0;
     public static final int kOperatorPort = 1;
     public static final SPI.Port kNavXPort = SPI.Port.kMXP;
@@ -87,7 +90,7 @@ public class Constants {
                                                     {257.607, 275.273, 0.0}, // green 3, 7, 11
                                                     {103.359 - 5.0 - 4.0, 87.539,  0.0}}; // yellow 4, 8, 12
 
-    public static double kDriveLimit = 0.5; // 0.7 fast
+    public static double kDriveLimit = kDemoMode? 0.4 : 0.5; // 0.7 fast
     public static double kRotationLimit = kDriveLimit;
 
 
@@ -212,6 +215,8 @@ public class Constants {
         public static final int kRightTriggerButton = 8;
         public static final int kShare = 9;
         public static final int kOptions = 10;
+        public static final int kLeftStickButton = 11;
+        public static final int kRightStickButton = 12;
 
         // joystick axis numbers
         public static final int kLeftXJoystick = 0;
@@ -291,7 +296,7 @@ public class Constants {
             {
                 this.primaryPID.selectedFeedbackSensor = FeedbackDevice.IntegratedSensor;
                 this.primaryPID.selectedFeedbackCoefficient = 1;
-                this.slot0.kP = 0.165;
+                this.slot0.kP = 0.15;
                 this.slot0.kI = 0.0;
                 this.slot0.kD = 0.0;
                 this.slot0.kF = 0.0480;

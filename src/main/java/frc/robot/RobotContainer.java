@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.lib.control.motors.NKTalonFX;
 import frc.robot.Constants.OIConstants;
 import frc.robot.drive.SwerveDrive;
-import frc.robot.drive.commands.Drive;
+import frc.robot.drive.commands.TeleopDrive;
 import frc.robot.indexer.Indexer;
 import frc.robot.indexer.commands.IntakeIndexCommand;
 import frc.robot.indexer.commands.ShootIndexCommand;
@@ -63,33 +63,59 @@ public class RobotContainer {
   }
 
   private void configureDefaultCommands(){
-    swerve.setDefaultCommand(new Drive(driver, swerve));
+    swerve.setDefaultCommand(new TeleopDrive(driver, swerve));
 
     intake.setDefaultCommand(new IntakeCommand(intake, indexer, operator));
     indexer.setDefaultCommand(new IntakeIndexCommand(intake, indexer));
   }
   
   private void configureButtonBindings() {
-    new JoystickButton(driver, 1).onTrue(new InstantCommand(swerve::resetHeading));
+    new JoystickButton(driver, OIConstants.kSquare).onTrue(new InstantCommand(swerve::resetHeading));
 
-    new JoystickButton(operator, OIConstants.kSquare)
-        .onTrue(new SpinUpShooter(shooter, 3650, true))
-        .whileTrue(new ShootIndexCommand(indexer, shooter))
-        .onFalse(new StopShooter(shooter));
 
-    new JoystickButton(operator, OIConstants.kCircle)
-        .onTrue(new SpinUpShooter(shooter, 4000, false)) //was 4300
-        .whileTrue(new ShootIndexCommand(indexer, shooter))
-        .onFalse(new StopShooter(shooter));
+    if (!Constants.kDemoMode) {
+      createShootingButton(operator, OIConstants.kSquare, 3650);
+      createShootingButton(operator, OIConstants.kCircle, 4000);
+      createShootingButton(operator, OIConstants.kX, 4500);
+      createShootingButton(operator, OIConstants.kTriangle, 1500);
+    }
+    else {
+      createShootingButton(operator, OIConstants.kSquare, 1000);
+      createShootingButton(operator, OIConstants.kCircle, 2000);
+      createShootingButton(operator, OIConstants.kX, 1500);
+      createShootingButton(operator, OIConstants.kTriangle, 2500);
+      createShootingButton(operator, OIConstants.kShare, 3650);
+      createShootingButton(operator, OIConstants.kOptions, 4000);
+    }
 
-    new JoystickButton(operator, OIConstants.kX)
-        .onTrue(new SpinUpShooter(shooter, 4500, false))
-        .whileTrue(new ShootIndexCommand(indexer, shooter))
-        .onFalse(new StopShooter(shooter));
+    // new JoystickButton(operator, OIConstants.kSquare)
+    //     .onTrue(new SpinUpShooter(shooter, 3650, true))
+    //     .whileTrue(new ShootIndexCommand(indexer, shooter))
+    //     .onFalse(new StopShooter(shooter));
+
+    // new JoystickButton(operator, OIConstants.kCircle)
+    //     .onTrue(new SpinUpShooter(shooter, 4000, false)) //was 4300
+    //     .whileTrue(new ShootIndexCommand(indexer, shooter))
+    //     .onFalse(new StopShooter(shooter));
+
+    // new JoystickButton(operator, OIConstants.kX)
+    //     .onTrue(new SpinUpShooter(shooter, 4500, false))
+    //     .whileTrue(new ShootIndexCommand(indexer, shooter))
+    //     .onFalse(new StopShooter(shooter));
 
     // new JoystickButton(operator, OIConstants.kTriangle)
-    //     .onTrue(new InstantCommand(() -> {shooter.flywheel.set(0.75);}));
+    //     .onTrue(new SpinUpShooter(shooter, 2000, false))
+    //     .whileTrue(new ShootIndexCommand(indexer, shooter))
+    //     .onFalse(new StopShooter(shooter));
 
+  }
+
+  private JoystickButton createShootingButton(Joystick controller, int buttonNumber, double rpm) {
+    JoystickButton button = new JoystickButton(controller, buttonNumber);
+    button.onTrue(new SpinUpShooter(shooter, rpm, false));
+    button.whileTrue(new ShootIndexCommand(indexer, shooter));
+    button.onFalse(new StopShooter(shooter));
+    return button;
   }
 
   public void periodic(){

@@ -7,12 +7,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.drive.SwerveDrive;
 
-public class Drive extends CommandBase {
+public class TeleopDrive extends CommandBase {
 
     private Joystick driver;
     private SwerveDrive swerve;
 
-    public Drive(Joystick driver, SwerveDrive swerve) {
+    public TeleopDrive(Joystick driver, SwerveDrive swerve) {
         this.driver = driver;
         this.swerve = swerve;
 
